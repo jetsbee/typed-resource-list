@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
 import { ResourceRegistrationBtn } from "../ResourceRegistrationBtn/ResourceRegistrationBtn.styled";
 import { StyledForm, TextInput } from "./ResourceFormForUrl.styled";
+import { useFormActive } from "./hooks/useFormActive";
 import { useUrlResourceForm } from "./hooks/useUrlResourceForm";
 
 const UrlAddBtn = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
@@ -10,27 +10,35 @@ const UrlAddBtn = (props: React.ButtonHTMLAttributes<HTMLButtonElement>) => (
 );
 
 export const ResourceFormForURL = () => {
-  const [isActive, setIsActive] = useState(false);
   const { handleFormSubmit, textInputRef } = useUrlResourceForm();
+  const { isFormActive, activateForm, deactivateForm } = useFormActive();
 
-  const activateForm = () => setIsActive(true);
-  const handleStyledFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    handleFormSubmit(e);
-    setIsActive(false); // deactivate form
+  const propsForStyledForm = {
+    onSubmit: (e: React.FormEvent<HTMLFormElement>) => {
+      handleFormSubmit(e);
+      deactivateForm();
+    },
   };
 
-  return !isActive ? (
+  const propsForTextInput = {
+    ref: textInputRef,
+    placeholder: "https://... or http://...",
+    autoFocus: true,
+    autoCapitalize: "off",
+    onKeyDown: (e: React.KeyboardEvent<HTMLInputElement>) => {
+      e.key === "Escape" && deactivateForm();
+    },
+    onBlur: (e: React.FocusEvent<HTMLInputElement, Element>) => {
+      !e.currentTarget.value && deactivateForm();
+    },
+  };
+
+  return !isFormActive ? (
     <UrlAddBtn onClick={activateForm} />
   ) : (
-    <StyledForm onSubmit={handleStyledFormSubmit}>
+    <StyledForm {...propsForStyledForm}>
       <UrlAddBtn type="submit" />
-      <TextInput
-        ref={textInputRef}
-        onKeyDown={(e) => e.key === "Escape" && setIsActive(false)}
-        placeholder="https://... or http://..."
-        autoFocus
-        autoCapitalize="off"
-      />
+      <TextInput {...propsForTextInput} />
     </StyledForm>
   );
 };
