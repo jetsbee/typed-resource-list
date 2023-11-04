@@ -1,6 +1,3 @@
-export interface Resource {
-  id: number;
-  name: string;
-  data: string;
-  type: "url" | "image";
-}
+import { Resource } from "@/state/resource/type";
+
+export interface Props extends Resource {}

@@ -13,19 +13,3 @@ export const StyledDiv = styled.div`
   gap: 1rem;
   padding: 1rem;
 `;
-
-export const StyledBtn = styled.button`
-  cursor: pointer;
-  width: 12.5rem;
-  font-size: 1.2rem;
-  color: #000;
-  border-radius: 0.5rem;
-  border: 0.1rem solid #e5e5e5;
-  background-color: #fff;
-  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-
-  &:active {
-    border-color: #b7b7b7;
-    background-color: rgba(0, 0, 0, 0.04);
-  }
-`;

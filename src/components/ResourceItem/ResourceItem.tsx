@@ -1,6 +1,6 @@
 import { StyledContainer } from "./ResourceItem.styled";
-import { Resource } from "./ResourceItem.type";
+import { Props } from "./ResourceItem.type";
 
-export const ResourceItem = (props: Resource) => {
+export const ResourceItem = (props: Props) => {
   return <StyledContainer>{props.name}</StyledContainer>;
 };

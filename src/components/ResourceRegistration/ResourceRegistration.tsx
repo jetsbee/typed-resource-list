@@ -1,10 +1,12 @@
-import { StyledBtn, StyledDiv } from "./ResourceRegistration.styled";
+import { ResourceFormForURL } from "../ResourceFormForUrl/ResourceFormForUrl";
+import { ResourceRegistrationBtn } from "../ResourceRegistrationBtn/ResourceRegistrationBtn.styled";
+import { StyledDiv } from "./ResourceRegistration.styled";
 
 export const ResourceRegistration = () => {
   return (
     <StyledDiv>
-      <StyledBtn>URL 추가</StyledBtn>
-      <StyledBtn>이미지 추가</StyledBtn>
+      <ResourceFormForURL />
+      <ResourceRegistrationBtn>이미지 추가</ResourceRegistrationBtn>
     </StyledDiv>
   );
 };
