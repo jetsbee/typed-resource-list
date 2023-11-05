@@ -1,8 +1,7 @@
 "use client";
 
 import styled from "@emotion/styled";
-import { TypedIcon } from "typed-design-system";
-import { SVGTrashSmall } from "./TrashSmall.svg";
+import { EditIcon, TrashIcon } from "../Icon/Icon.styled";
 
 export const StyledContainer = styled.div`
   background-color: #fff;
@@ -49,38 +48,6 @@ export const ButtonWrapper = styled.div`
   margin-bottom: 1.2rem;
 `;
 
-type IconProps = Omit<Parameters<typeof TypedIcon>[0], "icon">;
-
-const EditIcon = (props: IconProps) => <TypedIcon {...props} icon="edit_19" />;
-
-const StyledEditIcon = styled(EditIcon)`
-  font-size: 1.9rem; // ref. https://www.npmjs.com/package/typed-design-system#hot-to-use
-  path {
-    transform-origin: center;
-    transform: scale(
-      ${(15.09 / 12.04).toFixed(4)}
-    ); // (15.09/12.04) (가로기준) or (15.07/12.03) (세로기준)
-  } // Same as figma design
-`;
-
-const StyledI = styled.i`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-box-align: center;
-`;
-
-const TrashIcon = (props: React.SVGProps<SVGSVGElement>) => (
-  <StyledI>
-    <SVGTrashSmall {...props} width="1em" height="1em" />
-  </StyledI>
-); // Mimic TypedIcon, TypedIcon에 동일한 디자인 아이콘 없음
-
-const StyledTranshIcon = styled(TrashIcon)`
-  font-size: 1.9rem;
-`;
-
 const StyledBtn = styled.button`
   width: 1.9rem;
   height: 1.9rem;
@@ -92,6 +59,20 @@ const StyledBtn = styled.button`
     transform-origin: center;
     transform: scale(1.05);
   }
+`;
+
+const StyledEditIcon = styled(EditIcon)`
+  font-size: 1.9rem; // ref. https://www.npmjs.com/package/typed-design-system#hot-to-use
+  path {
+    transform-origin: center;
+    transform: scale(
+      ${(15.09 / 12.04).toFixed(4)}
+    ); // (15.09/12.04) (가로기준) or (15.07/12.03) (세로기준)
+  } // Same as figma design
+`;
+
+const StyledTranshIcon = styled(TrashIcon)`
+  font-size: 1.9rem;
 `;
 
 export const StyledEditButton = (
