@@ -10,10 +10,16 @@ import {
 export const ResourceViewControl = () => {
   const resourceInView = useResourceInView();
   const { setResourceIdInView } = useResourceAction();
-
+  <StyledP>{resourceInView?.name}</StyledP>;
   return (
     <StyledContainer>
-      <StyledP>{resourceInView?.name}</StyledP>
+      <StyledP>
+        {resourceInView?.type === "url"
+          ? resourceInView.data
+          : resourceInView?.type === "image"
+          ? resourceInView.name
+          : null}
+      </StyledP>
       <StyledCloseButton onClick={() => setResourceIdInView(undefined)} />
     </StyledContainer>
   );
