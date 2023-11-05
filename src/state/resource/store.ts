@@ -33,6 +33,9 @@ export const useResourceStore = create<ResourceState>((set) => ({
     removeResource: (id: number) =>
       set(({ resourceMap }) => {
         const { [id]: removedItem, ...rest } = resourceMap;
+        if (removedItem.type === "image") {
+          URL.revokeObjectURL(removedItem.data);
+        }
         return { resourceMap: rest };
       }),
   }),
