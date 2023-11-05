@@ -9,11 +9,13 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@emotion/core": "10.0.35",
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",
     "next": "14.0.1",
     "react": "^18",
     "react-dom": "^18",
+    "typed-design-system": "^0.0.228",
     "zustand": "^4.4.6"
   },
   "devDependencies": {
