@@ -1,11 +1,31 @@
+"use client";
+
+import { useResourceInView } from "@/state/resource/client";
 import { ResourceViewControl } from "../ResourceViewControl/ResourceViewControl";
-import { StyledContainer } from "./ResourceView.styled";
+import {
+  StyledContainer,
+  StyledIframe,
+  StyledImage,
+} from "./ResourceView.styled";
 
 export const ResourceView = () => {
+  const resourceInView = useResourceInView();
+
   return (
-    <StyledContainer>
-      <ResourceViewControl />
-      <p>ResourceView</p>
-    </StyledContainer>
+    resourceInView && (
+      <StyledContainer>
+        <ResourceViewControl />
+        {resourceInView.type === "url" ? (
+          <StyledIframe src={resourceInView.data}></StyledIframe>
+        ) : resourceInView.type === "image" ? (
+          <StyledImage
+            src={resourceInView.data}
+            alt={resourceInView.name}
+            fill={true}
+            style={{ objectFit: "contain" }}
+          ></StyledImage>
+        ) : null}
+      </StyledContainer>
+    )
   );
 };

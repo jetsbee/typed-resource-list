@@ -18,6 +18,10 @@ export const StyledContainer = styled.div`
   z-index: 1;
 `;
 
+export const StyledP = styled.p`
+  overflow: auto;
+`;
+
 const StyledBtn = styled.button`
   width: 1.9rem;
   height: 1.9rem;

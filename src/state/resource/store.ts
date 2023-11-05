@@ -4,19 +4,22 @@ import { Resource } from "./type";
 interface ResourceActions {
   upsertResource: (resource: Resource) => void;
   removeResource: (id: number) => void;
+  setResourceIdInView: (id?: number) => void;
 }
 
 interface ResourceState {
   resourceMap: {
     [id: number]: Resource;
   };
+  resourceIdInView?: number;
   actions: () => ResourceActions;
 }
 
 export const useResourceStore = create<ResourceState>((set) => ({
   resourceMap: {},
+  resourceIdInView: undefined,
   actions: () => ({
-    upsertResource: (newResource: Resource) =>
+    upsertResource: (newResource) =>
       set(({ resourceMap }) =>
         !resourceMap[newResource.id]
           ? // Insert (Decending)
@@ -30,7 +33,7 @@ export const useResourceStore = create<ResourceState>((set) => ({
             ((resourceMap[newResource.id] = newResource), { resourceMap })
       ),
 
-    removeResource: (id: number) =>
+    removeResource: (id) =>
       set(({ resourceMap }) => {
         const { [id]: removedItem, ...rest } = resourceMap;
         if (removedItem.type === "image") {
@@ -38,5 +41,7 @@ export const useResourceStore = create<ResourceState>((set) => ({
         }
         return { resourceMap: rest };
       }),
+
+    setResourceIdInView: (id) => set({ resourceIdInView: id }),
   }),
 }));
