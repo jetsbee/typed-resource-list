@@ -2,6 +2,7 @@
 
 import { useResourceAction } from "@/state/resource/client";
 import { validateImgFile } from "@/utils/imageFileValidation";
+import { tryAction } from "@/utils/resourceRegistrationValidation";
 import { useRef } from "react";
 
 export const useImageResourceForm = () => {
@@ -16,14 +17,16 @@ export const useImageResourceForm = () => {
           for await (const file of fileInputRef.current.files) {
             try {
               const imgUrl = await validateImgFile(file);
-              // Todo: 랜덤 딜레이, 등록 성공 확률 구현
-              // Todo: 성공, 실패 토스트 구현
-              upsertResource({
-                id: Date.now(),
-                name: file.name,
-                data: imgUrl,
-                type: "image",
-              });
+
+              const action = () => {
+                upsertResource({
+                  id: Date.now(),
+                  name: file.name,
+                  data: imgUrl,
+                  type: "image",
+                });
+              };
+              await tryAction(action);
             } catch (err) {
               console.warn(err);
             }

@@ -1,7 +1,9 @@
 "use client";
 
 import { useResourceAction } from "@/state/resource/client";
+import { tryAction } from "@/utils/resourceRegistrationValidation";
 import { useRef } from "react";
+import toast from "react-hot-toast";
 
 const validateUrlScheme = (url: string) => /^https?:\/\//.test(url);
 
@@ -23,26 +25,29 @@ export const useUrlResourceForm = () => {
   const textInputRef = useRef<HTMLInputElement>(null);
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    (async () => {
+      const text = textInputRef.current?.value ?? "";
 
-    const text = textInputRef.current?.value ?? "";
-    // Todo: 랜덤 딜레이, 등록 성공 확률 구현
-    // Todo: 성공, 실패 토스트 구현
-    if (!text) {
-      console.log("문자가 비었습니다.");
-      return;
-    }
-    if (!validateUrlScheme(text)) {
-      console.log("url 스킴을 확인해주세요.");
-      return;
-    }
+      if (!text) {
+        return;
+      }
+      if (!validateUrlScheme(text)) {
+        toast.error("url 스킴을 확인해주세요.");
+        return;
+      }
 
-    const url = convertToYoutubeEmbededUrlIfPossible(text);
-    upsertResource({
-      id: Date.now(),
-      name: url,
-      data: url,
-      type: "url",
-    });
+      const url = convertToYoutubeEmbededUrlIfPossible(text);
+
+      const action = () => {
+        upsertResource({
+          id: Date.now(),
+          name: url,
+          data: url,
+          type: "url",
+        });
+      };
+      await tryAction(action);
+    })();
   };
 
   return { handleFormSubmit, textInputRef };

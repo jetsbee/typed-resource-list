@@ -1,6 +1,9 @@
+"use client";
+
 import { ResourceList } from "@/components/ResourceList/ResourceList";
 import { ResourceRegistration } from "@/components/ResourceRegistration/ResourceRegistration";
 import { ResourceView } from "@/components/ResourceView/ResourceView";
+import { Toaster } from "react-hot-toast";
 import {
   StyledListContainer,
   StyledMain,
@@ -10,6 +13,7 @@ import {
 export default function Home() {
   return (
     <StyledMain>
+      <Toaster />
       <StyledListContainer>
         <ResourceRegistration />
         <ResourceList />
